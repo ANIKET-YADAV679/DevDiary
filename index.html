@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevDiary - Developer Learning Tracker</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <h1>DevDiary</h1>
+        <p class="tagline">Log what you learn. Watch yourself grow.</p>
+      </div>
+      <nav class="nav-links">
+        <a href="#stats" class="active">Dashboard</a>
+        <a href="#new-log">New Log</a>
+        <a href="#recent-logs">Log History</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Quick Stats Grid -->
+    <section id="stats" class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">🔥</span>
+        <div>
+          <h3 class="stat-value" id="streak-count">0 Days</h3>
+          <p class="stat-label">Current Streak</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🎯</span>
+        <div>
+          <h3 class="stat-value" id="weekly-progress">0 / 5 Logs</h3>
+          <p class="stat-label">Weekly Target</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📚</span>
+        <div>
+          <h3 class="stat-value" id="total-logs">0</h3>
+          <p class="stat-label">Total Entries</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Entry Form -->
+    <section id="new-log" class="card">
+      <h2>Log Today's Learning</h2>
+      <form id="log-form">
+        <div class="form-group">
+          <label for="content">What did you learn today?</label>
+          <textarea id="content" name="content" rows="4"
+            placeholder="e.g., Practiced binary search, worked on Spring Boot entities, or solved LeetCode #3..."
+            required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tag">Category</label>
+            <select id="tag" name="tag" required>
+              <option value="DSA">DSA</option>
+              <option value="Full Stack">Full Stack</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="confidence">Confidence Level (1-5)</label>
+            <div class="confidence-selector">
+              <input type="range" id="confidence" name="confidence" min="1" max="5" value="3" />
+              <span id="confidence-val" class="confidence-badge">3 / 5</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Save Entry</button>
+      </form>
+    </section>
+
+    <!-- Recent Logs List -->
+    <section id="recent-logs" class="card">
+      <div class="section-header">
+        <h2>Recent Logs</h2>
+        <span id="log-counter" class="log-counter">0 logs saved</span>
+      </div>
+      <div id="logs-container" class="logs-list">
+        <!-- Rendered via script.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Built to prove that consistent learning beats talent.</p>
+  </footer>
+
+  <!-- App Script -->
+  <script src="script.js"></script>
+</body>
+
+</html>
