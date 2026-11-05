@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const weeklyProgress = document.getElementById('weekly-progress');
     const totalLogs = document.getElementById('total-logs');
     const logCounter = document.getElementById('log-counter');
+    const searchInput = document.getElementById('search-logs');
+    const btnExport = document.getElementById('btn-export');
   
-    // Initial dummy state or fetch from localStorage
     const initialLogs = [
       {
         id: '1',
@@ -27,17 +28,35 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: '3',
         date: '2026-06-12',
-        tag: 'Other',
-        content: 'Read about PostgreSQL indexing and foreign key constraints.',
+        tag: 'Database',
+        content: 'Read about PostgreSQL indexing strategies and foreign key constraints.',
         confidence: 3
       }
     ];
   
     let logs = JSON.parse(localStorage.getItem('devdiary_logs')) || initialLogs;
-  
+    let searchQuery = '';
+
     // Real-time confidence slider display update
     confidenceInput.addEventListener('input', (e) => {
       confidenceVal.textContent = `${e.target.value} / 5`;
+    });
+
+    // Search filter listener
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase();
+      renderLogs();
+    });
+
+    // Export logs feature
+    btnExport.addEventListener('click', () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `devdiary_backup_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
     });
   
     // Calculate Streak & Stats
@@ -45,19 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
       totalLogs.textContent = logs.length;
       logCounter.textContent = `${logs.length} log${logs.length === 1 ? '' : 's'} recorded`;
   
-      // Simple weekly goal (logs in last 7 days)
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       const recentWeekly = logs.filter(item => new Date(item.date) >= sevenDaysAgo).length;
       weeklyProgress.textContent = `${recentWeekly} / 5 Logs`;
   
-      // Dynamic streak calculation based on dates
       const uniqueDates = [...new Set(logs.map(log => log.date))].sort().reverse();
       let streak = 0;
       let today = new Date().toISOString().split('T')[0];
   
       for (let i = 0; i < uniqueDates.length; i++) {
-        const entryDate = new Date(uniqueDates[i]);
         const expectedDate = new Date();
         expectedDate.setDate(expectedDate.getDate() - i);
         const expectedStr = expectedDate.toISOString().split('T')[0];
@@ -72,17 +88,23 @@ document.addEventListener('DOMContentLoaded', () => {
       streakCount.textContent = `${streak > 0 ? streak : logs.length > 0 ? 1 : 0} Days 🔥`;
     }
   
-    // Render logs list
+    // Render logs list with search filtering
     function renderLogs() {
       logsContainer.innerHTML = '';
   
-      if (logs.length === 0) {
-        logsContainer.innerHTML = '<p class="empty-state">No logs yet. Complete your first study session above!</p>';
+      const filteredLogs = logs.filter(log => 
+        log.content.toLowerCase().includes(searchQuery) || 
+        log.tag.toLowerCase().includes(searchQuery) ||
+        log.date.includes(searchQuery)
+      );
+
+      if (filteredLogs.length === 0) {
+        logsContainer.innerHTML = '<p class="empty-state">No matching logs found. Keep building and log your progress!</p>';
         updateStats();
         return;
       }
   
-      logs.forEach(log => {
+      filteredLogs.forEach(log => {
         const sanitizedTag = log.tag.replace(/\s+/g, '-');
         const formattedDate = new Date(log.date).toLocaleDateString('en-US', {
           month: 'short',
@@ -99,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <p class="log-body">${escapeHTML(log.content)}</p>
           <div class="log-footer">
-            <span>Confidence: ${'★'.repeat(log.confidence)}${'☆'.repeat(5 - log.confidence)} (${log.confidence}/5)</span>
+            <span class="confidence-display">Confidence: ${'★'.repeat(log.confidence)}${'☆'.repeat(5 - log.confidence)} (${log.confidence}/5)</span>
             <button class="btn-delete" data-id="${log.id}">Delete</button>
           </div>
         `;
@@ -142,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    // Utility to prevent XSS in client-rendered logs
+    // Utility to prevent XSS
     function escapeHTML(str) {
       const p = document.createElement('p');
       p.textContent = str;
@@ -150,4 +172,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     renderLogs();
-  });
+});
