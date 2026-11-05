@@ -9,9 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
@@ -22,13 +20,13 @@
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <h1>DevDiary</h1>
-        <p class="tagline">Log what you learn. Watch yourself grow.</p>
+        <h1>DevDiary <span>// 679</span></h1>
+        <p class="tagline">Log what you learn. Build your legacy.</p>
       </div>
       <nav class="nav-links">
         <a href="#stats" class="active">Dashboard</a>
         <a href="#new-log">New Log</a>
-        <a href="#recent-logs">Log History</a>
+        <a href="#recent-logs">History</a>
       </nav>
     </div>
   </header>
@@ -37,21 +35,21 @@
     <!-- Quick Stats Grid -->
     <section id="stats" class="stats-grid">
       <div class="stat-card">
-        <span class="stat-icon">🔥</span>
+        <div class="stat-icon-wrapper fire">🔥</div>
         <div>
           <h3 class="stat-value" id="streak-count">0 Days</h3>
           <p class="stat-label">Current Streak</p>
         </div>
       </div>
       <div class="stat-card">
-        <span class="stat-icon">🎯</span>
+        <div class="stat-icon-wrapper target">🎯</div>
         <div>
           <h3 class="stat-value" id="weekly-progress">0 / 5 Logs</h3>
           <p class="stat-label">Weekly Target</p>
         </div>
       </div>
       <div class="stat-card">
-        <span class="stat-icon">📚</span>
+        <div class="stat-icon-wrapper total">📚</div>
         <div>
           <h3 class="stat-value" id="total-logs">0</h3>
           <p class="stat-label">Total Entries</p>
@@ -61,21 +59,26 @@
 
     <!-- New Entry Form -->
     <section id="new-log" class="card">
-      <h2>Log Today's Learning</h2>
+      <div class="card-title-bar">
+        <h2>⚡ Log Today's Learning</h2>
+        <span class="badge-live">Secure Local</span>
+      </div>
       <form id="log-form">
         <div class="form-group">
-          <label for="content">What did you learn today?</label>
+          <label for="content">What did you build or learn today?</label>
           <textarea id="content" name="content" rows="4"
-            placeholder="e.g., Practiced binary search, worked on Spring Boot entities, or solved LeetCode #3..."
+            placeholder="e.g., Configured Spring Security filter chains or optimized PostgreSQL indexes..."
             required></textarea>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="tag">Category</label>
+            <label for="tag">Category / Stack</label>
             <select id="tag" name="tag" required>
               <option value="DSA">DSA</option>
               <option value="Full Stack">Full Stack</option>
+              <option value="Backend">Backend</option>
+              <option value="Database">Database</option>
               <option value="Other">Other</option>
             </select>
           </div>
@@ -89,15 +92,21 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-primary">Save Entry</button>
+        <button type="submit" class="btn-primary">Save Entry to Diary 🚀</button>
       </form>
     </section>
 
-    <!-- Recent Logs List -->
+    <!-- Recent Logs List with Search & Export -->
     <section id="recent-logs" class="card">
       <div class="section-header">
-        <h2>Recent Logs</h2>
-        <span id="log-counter" class="log-counter">0 logs saved</span>
+        <div>
+          <h2>Recent Logs</h2>
+          <span id="log-counter" class="log-counter">0 logs saved</span>
+        </div>
+        <div class="section-actions">
+          <input type="text" id="search-logs" placeholder="Search logs..." class="search-input" />
+          <button id="btn-export" class="btn-secondary" title="Export as JSON">Export</button>
+        </div>
       </div>
       <div id="logs-container" class="logs-list">
         <!-- Rendered via script.js -->
@@ -106,7 +115,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Built to prove that consistent learning beats talent.</p>
+    <p>Built with grit. Consistent learning beats raw talent.</p>
   </footer>
 
   <!-- App Script -->
