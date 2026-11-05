@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const logCounter = document.getElementById('log-counter');
     const searchInput = document.getElementById('search-logs');
     const btnExport = document.getElementById('btn-export');
+    const btnProfileToggle = document.getElementById('btn-profile-toggle');
+    const profileSection = document.getElementById('profile-section');
   
     const initialLogs = [
       {
@@ -36,6 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
   
     let logs = JSON.parse(localStorage.getItem('devdiary_logs')) || initialLogs;
     let searchQuery = '';
+
+    // Profile Toggle Handler
+    btnProfileToggle.addEventListener('click', () => {
+      profileSection.classList.toggle('profile-hidden');
+      if (!profileSection.classList.contains('profile-hidden')) {
+        profileSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
 
     // Real-time confidence slider display update
     confidenceInput.addEventListener('input', (e) => {
@@ -113,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
   
         const logCard = document.createElement('div');
-        logCard.className = 'log-item';
+        logCard.className = 'log-item glass-item';
         logCard.innerHTML = `
           <div class="log-header">
             <span class="log-date">${formattedDate}</span>
@@ -159,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target.classList.contains('btn-delete')) {
         const idToDelete = e.target.dataset.id;
         logs = logs.filter(log => log.id !== idToDelete);
+        localStorage.setItem('destdiary_logs', JSON.stringify(logs));
         localStorage.setItem('devdiary_logs', JSON.stringify(logs));
         renderLogs();
       }
