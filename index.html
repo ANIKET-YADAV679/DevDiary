@@ -17,7 +17,11 @@
 
 <body>
 
-  <header class="app-header">
+  <!-- Background Glow FX for Glassmorphism Depth -->
+  <div class="glass-orb orb-1"></div>
+  <div class="glass-orb orb-2"></div>
+
+  <header class="app-header glass-panel">
     <div class="header-container">
       <div class="brand">
         <h1>DevDiary <span>// 679</span></h1>
@@ -27,28 +31,49 @@
         <a href="#stats" class="active">Dashboard</a>
         <a href="#new-log">New Log</a>
         <a href="#recent-logs">History</a>
+        <button id="btn-profile-toggle" class="nav-profile-btn">Profile 👤</button>
       </nav>
     </div>
   </header>
 
   <main class="main-container">
+    
+    <!-- Minimalist Profile Drawer / Section -->
+    <section id="profile-section" class="card glass-panel profile-hidden">
+      <div class="profile-header">
+        <div class="profile-avatar">AY</div>
+        <div>
+          <h2>Aniket Yadav</h2>
+          <p class="profile-role">B.Tech CSE Core | Full-Stack & Systems Dev</p>
+        </div>
+      </div>
+      <p class="profile-bio">Building robust full-stack applications, scaling algorithms, and documenting the grind every single day.</p>
+      <div class="profile-tech-stack">
+        <span class="stack-pill">C++</span>
+        <span class="stack-pill">Spring Boot</span>
+        <span class="stack-pill">PostgreSQL</span>
+        <span class="stack-pill">JavaScript</span>
+        <span class="stack-pill">React</span>
+      </div>
+    </section>
+
     <!-- Quick Stats Grid -->
     <section id="stats" class="stats-grid">
-      <div class="stat-card">
+      <div class="stat-card glass-panel">
         <div class="stat-icon-wrapper fire">🔥</div>
         <div>
           <h3 class="stat-value" id="streak-count">0 Days</h3>
           <p class="stat-label">Current Streak</p>
         </div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass-panel">
         <div class="stat-icon-wrapper target">🎯</div>
         <div>
           <h3 class="stat-value" id="weekly-progress">0 / 5 Logs</h3>
           <p class="stat-label">Weekly Target</p>
         </div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass-panel">
         <div class="stat-icon-wrapper total">📚</div>
         <div>
           <h3 class="stat-value" id="total-logs">0</h3>
@@ -58,7 +83,7 @@
     </section>
 
     <!-- New Entry Form -->
-    <section id="new-log" class="card">
+    <section id="new-log" class="card glass-panel">
       <div class="card-title-bar">
         <h2>⚡ Log Today's Learning</h2>
         <span class="badge-live">Secure Local</span>
@@ -97,7 +122,7 @@
     </section>
 
     <!-- Recent Logs List with Search & Export -->
-    <section id="recent-logs" class="card">
+    <section id="recent-logs" class="card glass-panel">
       <div class="section-header">
         <div>
           <h2>Recent Logs</h2>
